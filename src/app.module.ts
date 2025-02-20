@@ -1,8 +1,9 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import applicationConfig from "@/config/application.config";
 import { UploadModule } from "@/uploads/upload.module";
+import { FileParseMiddleware } from "@/common/middlewares/file-parse.middleware";
 
 @Module({
     imports: [
@@ -15,4 +16,8 @@ import { UploadModule } from "@/uploads/upload.module";
     controllers: [],
     providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+    configure(consumer: MiddlewareConsumer) {
+        consumer.apply(FileParseMiddleware).forRoutes("*");
+    }
+}

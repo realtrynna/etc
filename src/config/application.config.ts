@@ -1,7 +1,8 @@
 import { readFileSync } from "fs";
-
-import * as yaml from "js-yaml";
 import { join, dirname } from "path";
+import * as yaml from "js-yaml";
+
+import { NODE_ENV } from "@/constants";
 
 const APPLICATION_CONFIG_FILENAME = "application.yaml";
 
@@ -10,5 +11,5 @@ export default () => {
         readFileSync(join(__dirname, APPLICATION_CONFIG_FILENAME), "utf-8"),
     ) as Record<string, any>;
 
-    return applicationConfig;
+    return applicationConfig[NODE_ENV];
 };
