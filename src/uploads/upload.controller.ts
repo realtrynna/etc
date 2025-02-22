@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from "@nestjs/common";
+import { Controller, Get, Post, Req } from "@nestjs/common";
 import { UploadService } from "@/uploads/upload.service";
 
 @Controller()
@@ -10,5 +10,8 @@ export class UploadController {
     }
 
     @Post("upload")
-    async hello() {}
+    async hello(@Req() req) {
+        console.log("컨트롤러 진입", req.files);
+        return "hello";
+    }
 }
