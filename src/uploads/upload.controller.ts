@@ -11,7 +11,7 @@ export class UploadController {
 
     @Post("upload")
     async hello(@Req() req) {
-        console.log("컨트롤러 진입", req.files);
+        await this.uploadService.get(req.file);
         return "hello";
     }
 }

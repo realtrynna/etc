@@ -1,9 +1,16 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
+import { S3Service } from "@/external/s3/s3.service";
+import { Upload } from "@aws-sdk/lib-storage";
 
 @Injectable()
 export class UploadService {
-    constructor(private configService: ConfigService) {}
+    constructor(private readonly s3Service: S3Service) {
+        this.s3Service = s3Service;
+    }
 
-    async get() {}
+    async get(file: Buffer) {
+        const result = await this.s3Service.upload(file);
+
+        console.log(result);
+    }
 }

@@ -7,12 +7,12 @@ export class FileParseMiddleware implements NestMiddleware {
     use(req, res: Response, next: NextFunction) {
         const bb = Busboy({ headers: req.headers });
 
-        const files = [];
+        const fileChunkList = [];
 
         bb.on("file", (name, file, info) => {
-            file.on("data", (data) => files.push(data));
+            file.on("data", (data) => fileChunkList.push(data));
             file.on("end", () => {
-                req.files = Buffer.concat(files);
+                req.file = Buffer.concat(fileChunkList);
                 return next();
             });
         });
