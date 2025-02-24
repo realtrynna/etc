@@ -8,3 +8,9 @@ export interface S3Config {
     accessKey: string;
     secretAccessKey: string;
 }
+
+export interface FileInfo {
+    filename: string;
+    mimeType: string;
+    file: Buffer;
+}

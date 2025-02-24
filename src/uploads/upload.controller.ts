@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req } from "@nestjs/common";
+import { Body, Controller, Get, Post, Req } from "@nestjs/common";
 import { UploadService } from "@/uploads/upload.service";
 
 @Controller()
@@ -11,7 +11,7 @@ export class UploadController {
 
     @Post("upload")
     async hello(@Req() req) {
-        await this.uploadService.get(req.file);
-        return "hello";
+        const result = await this.uploadService.get(req.file);
+        return result;
     }
 }

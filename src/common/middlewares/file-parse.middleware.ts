@@ -1,5 +1,5 @@
 import { Injectable, NestMiddleware } from "@nestjs/common";
-import { NextFunction } from "express";
+import type { NextFunction } from "express";
 import * as Busboy from "busboy";
 
 @Injectable()
@@ -8,11 +8,20 @@ export class FileParseMiddleware implements NestMiddleware {
         const bb = Busboy({ headers: req.headers });
 
         const fileChunkList = [];
+        const fileInfo = {
+            filename: null,
+            mimeType: null,
+            file: null,
+        };
 
         bb.on("file", (name, file, info) => {
             file.on("data", (data) => fileChunkList.push(data));
             file.on("end", () => {
-                req.file = Buffer.concat(fileChunkList);
+                fileInfo.filename = info.filename;
+                fileInfo.file = Buffer.concat(fileChunkList);
+                fileInfo.mimeType = info.mimeType;
+
+                req.file = fileInfo;
                 return next();
             });
         });

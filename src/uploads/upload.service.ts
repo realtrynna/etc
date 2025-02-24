@@ -1,6 +1,7 @@
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
+
 import { S3Service } from "@/external/s3/s3.service";
-import { Upload } from "@aws-sdk/lib-storage";
+import type { FileInfo } from "@/types";
 
 @Injectable()
 export class UploadService {
@@ -8,9 +9,12 @@ export class UploadService {
         this.s3Service = s3Service;
     }
 
-    async get(file: Buffer) {
-        const result = await this.s3Service.upload(file);
+    async get(fileInfo: FileInfo): Promise<string> {
+        const result = await this.s3Service.upload(fileInfo);
 
-        console.log(result);
+        if (result.$metadata.httpStatusCode !== 200)
+            throw new BadRequestException("파일 업로드에 실패하였습니다.");
+
+        return result.Key;
     }
 }
