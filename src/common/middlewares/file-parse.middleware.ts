@@ -15,7 +15,13 @@ export class FileParseMiddleware implements NestMiddleware {
         };
 
         bb.on("file", (name, file, info) => {
-            file.on("data", (data) => fileChunkList.push(data));
+            file.resume();
+            res.text();
+
+            file.on("data", (data) => {
+                // console.log("파싱 중     ", info.mimeType);
+                fileChunkList.push(data);
+            });
             file.on("end", () => {
                 fileInfo.filename = info.filename;
                 fileInfo.file = Buffer.concat(fileChunkList);
@@ -23,6 +29,9 @@ export class FileParseMiddleware implements NestMiddleware {
 
                 req.file = fileInfo;
                 return next();
+            });
+            file.on("error", (err) => {
+                console.log("error occurred", err);
             });
         });
 
