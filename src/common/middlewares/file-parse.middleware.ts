@@ -1,10 +1,17 @@
-import { Injectable, NestMiddleware } from "@nestjs/common";
+import {
+    BadRequestException,
+    Injectable,
+    NestMiddleware,
+} from "@nestjs/common";
 import type { NextFunction } from "express";
 import * as Busboy from "busboy";
+
+const allowVideoMimeTypeList = ["video/x-m4v"];
 
 @Injectable()
 export class FileParseMiddleware implements NestMiddleware {
     use(req, res: Response, next: NextFunction) {
+        const uploadType = req.query.uploadType;
         const bb = Busboy({ headers: req.headers });
 
         const fileChunkList = [];
@@ -14,18 +21,23 @@ export class FileParseMiddleware implements NestMiddleware {
             file: null,
         };
 
-        bb.on("file", (name, file, info) => {
-            file.resume();
-            res.text();
-
+        bb.on("file", (_, file, { filename, mimeType }) => {
             file.on("data", (data) => {
-                // console.log("파싱 중     ", info.mimeType);
+                if (
+                    uploadType !== "video" ||
+                    !allowVideoMimeTypeList.includes(mimeType)
+                ) {
+                    throw new BadRequestException(
+                        `${mimeType} 형식의 파일은 업로드할 수 없습니다.`,
+                    );
+                }
+
                 fileChunkList.push(data);
             });
             file.on("end", () => {
-                fileInfo.filename = info.filename;
+                fileInfo.filename = filename;
                 fileInfo.file = Buffer.concat(fileChunkList);
-                fileInfo.mimeType = info.mimeType;
+                fileInfo.mimeType = mimeType;
 
                 req.file = fileInfo;
                 return next();
