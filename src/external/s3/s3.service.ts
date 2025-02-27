@@ -32,7 +32,7 @@ export class S3Service {
         });
 
         parallelUpload.on("httpUploadProgress", (progress) => {
-            console.log(progress.loaded + "/" + progress.total);
+            // console.log(progress.loaded + "/" + progress.total / 1_000);
         });
 
         return await parallelUpload.done();

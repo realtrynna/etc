@@ -13,4 +13,5 @@ export interface FileInfo {
     filename: string;
     mimeType: string;
     file: Buffer;
+    size: number;
 }
