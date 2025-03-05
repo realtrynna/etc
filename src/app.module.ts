@@ -2,7 +2,7 @@ import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 
 import applicationConfig from "@/config/application.config";
-import { UploadModule } from "@/uploads/upload.module";
+import { UploadModule } from "@/domains/uploads/upload.module";
 import { FileParseMiddleware } from "@/common/middlewares/file-parse.middleware";
 
 @Module({
@@ -10,7 +10,7 @@ import { FileParseMiddleware } from "@/common/middlewares/file-parse.middleware"
         UploadModule,
         ConfigModule.forRoot({
             isGlobal: true,
-            load: [applicationConfig],
+            load: [applicationConfig]
         }),
     ],
     controllers: [],

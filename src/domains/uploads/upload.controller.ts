@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, Req } from "@nestjs/common";
 import { PrismaClient } from "@prisma/client";
 
-import { UploadService } from "@/uploads/upload.service";
+import { UploadService } from "@/domains/uploads/upload.service";
 
 
 @Controller()

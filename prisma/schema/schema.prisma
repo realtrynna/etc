@@ -10,9 +10,26 @@ generator client {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  name  String?
-  email String  @unique
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  image     String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  albums Album[]
+  account Account?
+  albums  Album[]
+
+  @@map("user")
+}
+
+model Account {
+  user                  User    @relation(fields: [usereEmail], references: [email])
+  usereEmail            String  @unique @map("user_email")
+  provider              String?
+  providerAccountId     String? @map("provider_account_id")
+  refreshToken          String? @map("refresh_token")
+  refreshTokenExpiresIn String? @map("refresh_token_expires_in")
+
+  @@map("account")
 }

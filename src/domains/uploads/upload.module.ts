@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 
-import { UploadController } from "@/uploads/upload.controller";
-import { UploadService } from "@/uploads/upload.service";
+import { UploadController } from "@/domains/uploads/upload.controller";
+import { UploadService } from "@/domains/uploads/upload.service";
 import { S3Service } from "@/external/s3/s3.service";
 
 @Module({
