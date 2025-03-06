@@ -29,7 +29,7 @@ export class FileParseMiddleware implements NestMiddleware {
                     !allowVideoMimeTypeList.includes(mimeType)
                 ) {
                     throw new BadRequestException(
-                        `요청 경로 또는 ${mimeType} 형식의 파일은 업로드할 수 없습니다.`,
+                        `요청 경로가 올바르지 않거나 ${mimeType} 형식의 파일은 업로드할 수 없습니다.`,
                     );
                 }
 
