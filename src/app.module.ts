@@ -20,6 +20,6 @@ import { UsersModule } from "@/domains/users/users.module";
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
-        // consumer.apply(FileParseMiddleware).forRoutes("*");
+        consumer.apply(FileParseMiddleware).forRoutes("/upload");
     }
 }
