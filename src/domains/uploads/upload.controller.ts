@@ -4,9 +4,7 @@ import { UploadService } from "@/domains/uploads/upload.service";
 
 @Controller()
 export class UploadController {
-    private uploadService: UploadService;
-
-    constructor(uploadService: UploadService) {
+    constructor(private readonly uploadService: UploadService) {
         this.uploadService = uploadService;
     }
 

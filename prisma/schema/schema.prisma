@@ -13,7 +13,7 @@ model User {
   id        Int      @id @default(autoincrement())
   name      String
   email     String   @unique
-  image     String?
+  image     String?  @default(null)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -26,10 +26,10 @@ model User {
 model Account {
   user                  User    @relation(fields: [usereEmail], references: [email])
   usereEmail            String  @unique @map("user_email")
-  provider              String?
-  providerAccountId     String? @map("provider_account_id")
-  refreshToken          String? @map("refresh_token")
-  refreshTokenExpiresIn String? @map("refresh_token_expires_in")
+  provider              String? @default("local")
+  providerAccountId     String? @default(null) @map("provider_account_id")
+  refreshToken          String? @default(null) @map("refresh_token")
+  refreshTokenExpiresIn String? @default(null) @map("refresh_token_expires_in")
 
   @@map("account")
 }
