@@ -5,15 +5,17 @@ import applicationConfig from "@/config/application.config";
 import { UploadModule } from "@/domains/uploads/upload.module";
 import { FileParseMiddleware } from "@/common/middlewares/file-parse.middleware";
 import { UsersModule } from "@/domains/users/users.module";
+import { DbModule } from "@/db/db.module";
 
 @Module({
     imports: [
-        UsersModule,
-        UploadModule,
         ConfigModule.forRoot({
             isGlobal: true,
             load: [applicationConfig],
         }),
+        DbModule,
+        UsersModule,
+        UploadModule,
     ],
     controllers: [],
     providers: [],
