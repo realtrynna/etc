@@ -11,8 +11,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
         const response = ctx.getResponse<Response>();
         const status = exception.errorCode?.status || 500;
 
-        console.log("예외 ", exception instanceof ServiceException);
-
         response.status(status).json({
             statusCode: status,
             message: exception.message,

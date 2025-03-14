@@ -6,6 +6,7 @@ import { UploadModule } from "@/domains/uploads/upload.module";
 import { FileParseMiddleware } from "@/common/middlewares/file-parse.middleware";
 import { UsersModule } from "@/domains/users/users.module";
 import { DbModule } from "@/db/db.module";
+import { ResponseInterceptor } from "@/common/interceptors/response.interceptor";
 
 @Module({
     imports: [
@@ -17,8 +18,12 @@ import { DbModule } from "@/db/db.module";
         UsersModule,
         UploadModule,
     ],
-    controllers: [],
-    providers: [],
+    providers: [
+        {
+            provide: "APP_INTERCEPTOR",
+            useClass: ResponseInterceptor,
+        },
+    ],
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {

@@ -7,7 +7,7 @@ import { ControllerException } from "@/common/exceptions/service.exception";
 export class UsersController {
     @Post()
     async createUser(@Body() createUserDto) {
-        throw ControllerException("예외 발생");
-        // throw new BadRequestException("bad request");
+        // throw ControllerException("예외 발생");
+        return "controller response data";
     }
 }
